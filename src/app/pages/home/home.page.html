@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Student Card Assistant</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row *ngIf="!loading && entities && entities.length == 0">
+    <p class="hint">Select grade and class</p>
+  </ion-row>
+  <ion-list>
+    <ion-item>
+      <ion-label class="criteria-label">Grade</ion-label>
+      <ion-select [(ngModel)]="category_id" placeholder="Select" class="criteria-select" (ionChange)="getEntityList()">
+        <ion-select-option *ngFor="let category of categories" value="{{category.id}}">
+          {{ category.code + ' - ' + category.description1 }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label class="criteria-label">Class</ion-label>
+      <ion-select [(ngModel)]="class_id" placeholder="Select" class="criteria-select" (ionChange)="getEntityList()">
+        <ion-select-option *ngFor="let class of classes" value="{{class.id}}">
+          {{ class.code + ' - ' + class.description1 }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-row *ngIf="entities && entities.length > 0">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterItems()"></ion-searchbar>
+  </ion-row>
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+</ion-header>
+
+<ion-content>
+  <ion-virtual-scroll [items]="filteredEntities" approxItemHeight="216px">
+    <ion-item tappable *virtualItem="let entity" lines="inset" class="entity-item" (click)="detail(entity)">
+      <ion-label class="label-item-left" text-wrap>
+        {{ entity.code + ' - ' + entity.name_1 + ' ' + entity.name_2 }}
+      </ion-label>
+      <ion-label class="label-item-right" slot="end" text-right text-wrap>
+        <span *ngIf="entity.card_no != ''" class="card-no">Assigned</span>
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>

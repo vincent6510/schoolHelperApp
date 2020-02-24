@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="text-align: center;">
+      <h1>School Assistant</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-row>
+    <ion-col size="3">
+    </ion-col>
+    <ion-col size="6" style="display: flex;justify-content: center;">
+      <ion-img style="width: 200px; height: 200px;" src="../../../assets/images/logo.jpeg"></ion-img>
+    </ion-col>
+    <ion-col size="3">
+    </ion-col>
+  </ion-row>
+  <!--  Sign In  -->
+  <section class="section sign-in">
+    <form #form="ngForm" (ngSubmit)="login(form)" method="post">
+      <ion-item *ngIf="!storageUsername">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input ngModel type="text" name="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="storageUsername">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input [(ngModel)]="storageUsername" type="text" name="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input ngModel type="password" name="password" placeholder="Password"></ion-input>
+      </ion-item>
+      <button>Sign In</button>
+    </form>
+  </section>
+  <p class="app-version">Version: {{ appVersionStr }}</p>
+</ion-content>
